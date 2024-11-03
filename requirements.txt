@@ -1,1 +1,1 @@
-airtable-export>=0.6
+pyairtable>=0.6
