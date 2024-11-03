@@ -29,8 +29,9 @@ jobs:
       env:
         AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
         AIRTABLE_KEY: ${{ secrets.AIRTABLE_KEY }}
+        AIRTABLE_TABLES: ${{ secrets.AIRTABLE_TABLES }}
       run: |-
-        airtable-export data $AIRTABLE_BASE_ID airtable_export -v --user-agent "curl/7.64.1"
+        airtable-export export $AIRTABLE_BASE_ID $AIRTABLE_TABLES --key=$AIRTABLE_KEY
     - name: Commit and push if it changed
       run: |-
         git config user.name "Automated"
