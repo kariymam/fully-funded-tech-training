@@ -1,9 +1,9 @@
-from dotenv import load_dotenv # testing purposes
+# from dotenv import load_dotenv
 import os
 import requests
 import pandas as pd
 
-load_dotenv() # testing purposing
+# load_dotenv()
 
 AIRTABLE_KEY = os.environ["airtable_key"]
 AIRTABLE_BASE_ID = os.environ["airtable_base_id"]
