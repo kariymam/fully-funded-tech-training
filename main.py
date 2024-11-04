@@ -16,3 +16,7 @@ df=df.reindex(columns=col_order)
 
 # save to csv
 df.to_csv('test.csv', index=False, encoding='utf-8')
+
+#T0DO: Figure out how to exclude fields.City, id, and createdTime
+#TODO: Figure out how to remove brackets from Eligible Residents & Benefits, and cleanup headers
+#TODO: Convert CSV to Markdown and append to README either here or in a frontend folder
