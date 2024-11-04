@@ -12,11 +12,11 @@ data = response.json()
 # dataframe
 df = pd.json_normalize(data['records'])
 col_order = ['fields.Name','fields.URL','fields.Instruction','fields.Eligible Residents (Cities)','fields.Description','fields.Applications','fields.Start Date','fields.Benefits', 'createdTime', 'id', 'fields.City']
-df=df.reindex(columns=col_order)
+df=df.reindex(columns=col_order).drop(columns=['createdTime', 'id', 'fields.City'])
 
 # save to csv
 df.to_csv('test.csv', index=False, encoding='utf-8')
 
 #T0DO: Figure out how to exclude fields.City, id, and createdTime
-#TODO: Figure out how to remove brackets from Eligible Residents & Benefits, and cleanup headers
+#TODO: Figure out how to remove brackets from Eligible Residents & Benefits, and cleanup header names by removing 'fields.' from th first 8
 #TODO: Convert CSV to Markdown and append to README either here or in a frontend folder
