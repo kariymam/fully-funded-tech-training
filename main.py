@@ -1,10 +1,21 @@
 import os
-from pyairtable import Api
+import requests
+import pandas as pd
 
-AIRTABLE_BASE_ID = os.environ['AIRTABLE_BASE_ID']
-AIRTABLE_KEY = os.environ['AIRTABLE_KEY']
-AIRTABLE_TABLES = os.environ['AIRTABLE_TABLES']
+api_key = os.environ.get("AIRTABLE_KEY")
+base = os.environ.get("AIRTABLE_BASE_ID")
+table = os.environ.get("AIRTABLE_TABLEID")
+url = f"https://api.airtable.com/v0/{base}/{table}/"
+headers = {
+    f"Authorization: Bearer {api_key}"
+}
+response = requests.get(url, headers={'Authorization': f'Bearer {api_key}'})
+data = response.json()
 
-api = Api(AIRTABLE_KEY)
-table = api.table(AIRTABLE_BASE_ID, AIRTABLE_TABLES)
-table.all()
+# dataframe
+df = pd.json_normalize(data['records'])
+col_order = ['fields.Name','fields.URL','fields.Instruction','fields.Eligible Residents (Cities)','fields.Description','fields.Applications','fields.Start Date','fields.Benefits', 'createdTime', 'id', 'fields.City']
+df=df.reindex(columns=col_order)
+
+# save to csv
+df.to_csv('test.csv', index=False, encoding='utf-8')
