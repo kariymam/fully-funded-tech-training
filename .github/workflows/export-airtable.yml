@@ -38,8 +38,5 @@ jobs:
         airtable_tableid: ${{ secrets.AIRTABLE_TABLEID }}
       run: |-
         python main.py
-    - name: Get current date
-        id: timestamp
-        run: echo "TIMESTAMP=$(date +"%Y%m%d%H%M%S")" >> $GITHUB_ENV
     - name: Commit and push if it changed
       uses: stefanzweifel/git-auto-commit-action@v5
