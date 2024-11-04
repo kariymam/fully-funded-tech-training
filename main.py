@@ -11,9 +11,10 @@ headers = {
 }
 response = requests.get(url, headers={'Authorization': f'Bearer {api_key}'})
 data = response.json()
+result = data['records']
 
 # dataframe
-df = pd.json_normalize(data['records'])
+df = pd.json_normalize(result)
 col_order = ['fields.Name','fields.URL','fields.Instruction','fields.Eligible Residents (Cities)','fields.Description','fields.Applications','fields.Start Date','fields.Benefits', 'createdTime', 'id', 'fields.City']
 df=df.reindex(columns=col_order)
 
