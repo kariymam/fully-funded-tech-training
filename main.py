@@ -12,7 +12,8 @@ data = response.json()
 # dataframe
 df = pd.json_normalize(data['records'])
 col_order = ['fields.Name','fields.URL','fields.Instruction','fields.Eligible Residents (Cities)','fields.Description','fields.Applications','fields.Start Date','fields.Benefits', 'createdTime', 'id', 'fields.City']
-df=df.reindex(columns=col_order).drop(columns=['createdTime', 'id', 'fields.City'],axis=1,inplace=True)
+df=df.reindex(columns=col_order)
+df.drop(columns=['createdTime', 'id', 'fields.City'],axis=1,inplace=True)
 
 # save to csv
 df.to_csv('test.csv', index=False, encoding='utf-8')
