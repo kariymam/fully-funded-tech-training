@@ -28,9 +28,9 @@ jobs:
         pip install -r requirements.txt
     - name: Export Airtable to data/
       env:
-        AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
-        AIRTABLE_KEY: ${{ secrets.AIRTABLE_KEY }}
-        AIRTABLE_TABLES: ${{ secrets.AIRTABLE_TABLEID }}
+        airtable_base_id: ${{ secrets.AIRTABLE_BASE_ID }}
+        airtable_key: ${{ secrets.AIRTABLE_KEY }}
+        airtable_tableid: ${{ secrets.AIRTABLE_TABLEID }}
       run: |-
         python main.py
     - name: Commit and push if it changed

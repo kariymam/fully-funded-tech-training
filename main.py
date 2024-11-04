@@ -2,19 +2,15 @@ import os
 import requests
 import pandas as pd
 
-api_key = os.environ.get("AIRTABLE_KEY")
-base = os.environ.get("AIRTABLE_BASE_ID")
-table = os.environ.get("AIRTABLE_TABLEID")
-url = f"https://api.airtable.com/v0/{base}/{table}/"
-headers = {
-    f"Authorization: Bearer {api_key}"
-}
-response = requests.get(url, headers={'Authorization': f'Bearer {api_key}'})
+AIRTABLE_KEY = os.environ["airtable_key"]
+AIRTABLE_BASE_ID = os.environ["airtable_base_id"]
+AIRTABLE_TABLEID = os.environ["airtable_tableid"]
+url = f"https://api.airtable.com/v0/{AIRTABLE_BASE_ID}/{AIRTABLE_TABLEID}/"
+response = requests.get(url, headers={'Authorization': f'Bearer {AIRTABLE_KEY}'})
 data = response.json()
-result = data['records']
 
 # dataframe
-df = pd.json_normalize(result)
+df = pd.json_normalize(data['records'])
 col_order = ['fields.Name','fields.URL','fields.Instruction','fields.Eligible Residents (Cities)','fields.Description','fields.Applications','fields.Start Date','fields.Benefits', 'createdTime', 'id', 'fields.City']
 df=df.reindex(columns=col_order)
 
