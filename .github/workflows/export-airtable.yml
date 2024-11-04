@@ -29,7 +29,7 @@ jobs:
       env:
         AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
         AIRTABLE_KEY: ${{ secrets.AIRTABLE_KEY }}
-        AIRTABLE_TABLES: ${{ secrets.AIRTABLE_TABLES }}
+        AIRTABLE_TABLES: ${{ secrets.AIRTABLE_TABLEID }}
       run: |-
         python main.py
     - name: Commit and push if it changed
