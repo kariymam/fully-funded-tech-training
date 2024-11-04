@@ -38,6 +38,3 @@ def clean_text(path):
 
 df = clean_text(csv_file_path)
 df.to_csv(csv_file_path, index=False, encoding='utf-8')
-
-
-#TODO: Convert CSV to Markdown and append to README either here or in a frontend folder
