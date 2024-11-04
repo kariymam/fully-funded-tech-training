@@ -40,3 +40,8 @@ jobs:
         python main.py
     - name: Commit and push if it changed
       uses: stefanzweifel/git-auto-commit-action@v5
+      run: |-
+        git pull
+        git add -a
+        git commit -m "Auto commit"
+        git push
