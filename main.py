@@ -1,10 +1,10 @@
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 import os
 import requests
 import pandas as pd
 from csv2markdown import update_table
 
-# load_dotenv()
+load_dotenv()
 
 AIRTABLE_KEY = os.environ["airtable_key"]
 AIRTABLE_BASE_ID = os.environ["airtable_base_id"]
@@ -23,10 +23,8 @@ df.drop(df.columns[[0, 1]],axis=1,inplace=True)
 df.columns = df.columns.str.replace("fields.", "", regex=True)
 
 # reorder columns
-col_order = ['Name','Program','Instruction','Eligible Residents (Cities)','Description','Benefits'] 
-# Removed 'Applications','Start Date',
+col_order = ['Name','Program','Instruction','Eligible Residents (Cities)','Description'] # Removed 'Applications','Start Date', 'Benefits'
 df = df.reindex(columns=col_order)
-
 # clean text and save to csv
 csv_file_path = 'test.csv'
 df.to_csv(csv_file_path, index=False, encoding='utf-8')
@@ -35,7 +33,7 @@ def clean_text(path, exclude_columns=[]):
   df = pd.read_csv(path)
   for column in df.columns:
     if column not in exclude_columns:
-        df[column] = df[column].str.replace(r"[^a-zA-Z0-9\s,\/\.:\-_$]", "", regex=True)
+        df[column] = df[column].str.replace(r"[^a-zA-Z0-9\s+,\/\.:\-_$]", "", regex=True)
   return df
 
 df = clean_text(csv_file_path, exclude_columns=["Description", "Program"])
