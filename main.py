@@ -33,7 +33,7 @@ def clean_text(path, exclude_columns=[]):
   df = pd.read_csv(path)
   for column in df.columns:
     if column not in exclude_columns:
-        df[column] = df[column].str.replace(r"[^a-zA-Z0-9\s+,\/\.:\-_$]", "", regex=True)
+        df[column] = df[column].str.replace(r"[^a-zA-Z0-9\s+,\|\/\.:\-_!?$]", "", regex=True)
   return df
 
 df = clean_text(csv_file_path, exclude_columns=["Description", "Program"])
