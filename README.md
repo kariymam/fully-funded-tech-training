@@ -1,8 +1,10 @@
 # Fully-Funded Tech Training (USA)
 
-Database for fully-funded training and paid apprenticeships in tech USA.
+Database of tech training programs with a focus on tuition-free and equity-minded coding bootcamps in the US. Inspired by [tech-coops](https://github.com/hng/tech-coops) list. I pull in the data in the README automatically from Airtable using Github Actions. Aiming to keep updated for the Spring 2025 and Summer 2025 trimesters.
 
-[Airtable](https://airtable.com/appqEVyfEtJKb0s4B/shrSLf0dWIsGUuDjI)
+View the data on [Airtable](https://airtable.com/appqEVyfEtJKb0s4B/shrSLf0dWIsGUuDjI)
+
+---
 
 
 |    | Name                   | Program                                                                              | Instruction                  | Eligible Residents (Cities)                                                                                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                                 |
