@@ -2,6 +2,7 @@
 import os
 import requests
 import pandas as pd
+from csv2markdown import update_table
 
 # load_dotenv()
 
@@ -16,25 +17,28 @@ data = response.json()
 df = pd.json_normalize(data['records'])
 
 # drop 'createdTime', 'id'
-drop_cols = [0, 1]
-df.drop(df.columns[drop_cols],axis=1,inplace=True)
+df.drop(df.columns[[0, 1]],axis=1,inplace=True)
 
 # strip out 'fields.' from column headers
 df.columns = df.columns.str.replace("fields.", "", regex=True)
 
 # reorder columns
-col_order = ['Name','URL','Instruction','Eligible Residents (Cities)','Description','Applications','Start Date','Benefits']
+col_order = ['Name','Instruction','Eligible Residents (Cities)','Description','Applications','Start Date','Benefits']
 df = df.reindex(columns=col_order)
 
 # clean text and save to csv
 csv_file_path = 'test.csv'
 df.to_csv(csv_file_path, index=False, encoding='utf-8')
 
-def clean_text(path):
+def clean_text(path, exclude_columns=[]):
   df = pd.read_csv(path)
   for column in df.columns:
-    df[column] = df[column].str.replace(r"[^a-zA-Z0-9\s,\/\.:\-\$]", "", regex=True)
+    if column not in exclude_columns:
+        df[column] = df[column].str.replace(r"[^a-zA-Z0-9\s,\/\.:\-\$]", "", regex=True)
   return df
 
-df = clean_text(csv_file_path)
+df = clean_text(csv_file_path, exclude_columns=["Description"])
 df.to_csv(csv_file_path, index=False, encoding='utf-8')
+
+markdown_file_path = 'README.md'
+update_table(csv_file_path, markdown_file_path)
