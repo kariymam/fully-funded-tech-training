@@ -23,7 +23,8 @@ df.drop(df.columns[[0, 1]],axis=1,inplace=True)
 df.columns = df.columns.str.replace("fields.", "", regex=True)
 
 # reorder columns
-col_order = ['Name','Instruction','Eligible Residents (Cities)','Description','Applications','Start Date','Benefits']
+col_order = ['Name','Program','Instruction','Eligible Residents (Cities)','Description','Benefits'] 
+# Removed 'Applications','Start Date',
 df = df.reindex(columns=col_order)
 
 # clean text and save to csv
@@ -34,10 +35,10 @@ def clean_text(path, exclude_columns=[]):
   df = pd.read_csv(path)
   for column in df.columns:
     if column not in exclude_columns:
-        df[column] = df[column].str.replace(r"[^a-zA-Z0-9\s,\/\.:\-\$]", "", regex=True)
+        df[column] = df[column].str.replace(r"[^a-zA-Z0-9\s,\/\.:\-_$]", "", regex=True)
   return df
 
-df = clean_text(csv_file_path, exclude_columns=["Description"])
+df = clean_text(csv_file_path, exclude_columns=["Description", "Program"])
 df.to_csv(csv_file_path, index=False, encoding='utf-8')
 
 markdown_file_path = 'README.md'
