@@ -21,7 +21,7 @@ def prep_for_csv(data):
    # strip out 'fields.' from column headers
    df.columns = df.columns.str.replace("fields.", "", regex=True)
    # reorder columns
-   col_order = ['Company','Program','Instruction','Eligible Residents (Cities)','Description'] # Removed 'Applications','Start Date', 'Benefits'
+   col_order = ['Company','Program Start','Instruction','Location','Description'] # Removed 'Applications','Start Date', 'Benefits'
    return df.reindex(columns=col_order)
 
 # Save as CSV
