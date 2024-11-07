@@ -1,3 +1,7 @@
+"""
+   TODO: Align to https://peps.python.org/pep-0008/#introduction
+"""
+
 # from dotenv import load_dotenv
 import os
 import requests
