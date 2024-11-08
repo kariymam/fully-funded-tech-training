@@ -4,17 +4,19 @@ import pandas as pd
 # Regex for finding a table
 rgx = r"((\r?\n){2}|^)([^\r\n]*\|[^\r\n]*(\r?\n)?)+(?=(\r?\n){2}|$)"
 
-#Check if there's a table in README.md
-def find_table(path):
+# Check if there's a table in README.md
+def find_table(path: str):
     with open(path, "r") as f:
         content = f.read()
         file_str = content
         try:
             match = re.findall(rgx, file_str, flags=re.M)
             return bool(match)
-        except:
-            return print("There's something weird going on here")
+        except IndexError:
+            print("Can't determine if table exists in README")
+            raise
 
+# Update table in README.md
 def update_table(csv_path, markdown_path):
     df = pd.read_csv(csv_path)
     markdown_table = df.to_markdown()
