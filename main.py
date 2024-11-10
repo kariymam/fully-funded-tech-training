@@ -13,21 +13,15 @@ def fetch_airtable():
 
 # Prepare data for CSV
 def prepare_csv(data, path_to_export, exclude_columns: str = []):
-    # TODO: Add method chaining
-    df = pd.json_normalize(data['records'])
-
-    # Strip out 'fields.' from column headers
-    df = df.rename(columns=lambda name: re.sub(r"^fields.", "", name, flags = re.M) if name.startswith('fields.') else name)
-
+   
     # Select specific columns
     selected_columns = ['Company','Program','Instruction','Location','Description']
-    df = df.reindex(columns=selected_columns)
 
-    # Alphabetize CSV by Program
-    df = df.sort_values(by='Program')
-
-    # Create a temp csv file
-    df.to_csv(path_to_export, index=False, encoding='utf-8')
+    df = (pd.json_normalize(data['records'])
+          .rename(columns=lambda name: re.sub(r"^fields.", "", name, flags = re.M) if name.startswith('fields.') else name)
+          .reindex(columns=selected_columns)
+          .sort_values(by='Company')
+          .to_csv(path_to_export, index=False, encoding='utf-8'))
 
     # Read CSV file
     temp = pd.read_csv(path_to_export)
@@ -60,10 +54,7 @@ def find_table(path: str) -> bool:
 
 # Update Markdown table in README.md
 def update_table(csv_path, markdown_path):
-    df = pd.read_csv(csv_path)
-
-    # Convert CSV to Markdown
-    markdown_table = df.to_markdown()
+    df = (pd.read_csv(csv_path).to_markdown())
 
     # Run find_table check
     check = find_table(markdown_path)
@@ -71,7 +62,7 @@ def update_table(csv_path, markdown_path):
     # In the markdown file
     with open (markdown_path, 'r' ) as f:
         content = f.read()
-        replace_table = re.sub(mkd_table_regex(), f"\n\n{markdown_table}", content, flags = re.M)
+        replace_table = re.sub(mkd_table_regex(), f"\n\n{df}", content, flags = re.M)
         if check is True:
             # Overwrite table at the end of the file
             with open(markdown_path, 'w') as f:
@@ -79,7 +70,7 @@ def update_table(csv_path, markdown_path):
         elif check is False:
             # Append table to the end of the file
             with open(markdown_path, 'a') as f:
-                f.write('\n\n'+markdown_table)
+                f.write('\n\n'+df)
 
 def main():
     data = fetch_airtable()
