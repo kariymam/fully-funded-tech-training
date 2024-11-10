@@ -13,6 +13,7 @@ def fetch_airtable():
 
 # Prepare data for CSV
 def prepare_csv(data, path_to_export, exclude_columns: str = []):
+    # TODO: Add method chaining
     df = pd.json_normalize(data['records'])
 
     # Strip out 'fields.' from column headers
