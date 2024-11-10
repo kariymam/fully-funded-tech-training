@@ -25,6 +25,8 @@ def prepare_csv(data, path_to_export, exclude_columns: str = []):
     # Create a temp csv file
     df.to_csv(path_to_export, index=False, encoding='utf-8')
 
+    # TODO: Alphabetize CSV by Program
+
     # Read CSV file
     temp = pd.read_csv(path_to_export)
 
