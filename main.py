@@ -23,7 +23,7 @@ def prepare_csv(data, path_to_export, exclude_columns: str = []):
     df = df.reindex(columns=selected_columns)
 
     # Alphabetize CSV by Program
-    df = df.sort_values(by='Program').head()
+    df = df.sort_values(by='Program')
 
     # Create a temp csv file
     df.to_csv(path_to_export, index=False, encoding='utf-8')
